@@ -6,6 +6,9 @@ let moveCounterTag = document.getElementsByClassName('moves')[0];
 let deck = document.getElementsByClassName('deck')[0];
 let retstartButton = document.getElementsByClassName('restart')[0];
 let starsElement = document.getElementsByClassName('stars')[0];
+let modal = document.getElementById('myModal'); 
+let modalTextElement = modal.getElementsByTagName('p')[0];  
+let resetButton = document.getElementsByClassName('reset-button')[0];
 let openCards = [];
 let matchedCards = [];
 let moveCounter = 0;
@@ -70,9 +73,17 @@ function updateMoveCounter(){
     moveCounterTag.textContent = moveCounter;
 }
 
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
 function checkDone(){
     if(matchedCards.length === cards.length){
-        alert('Congratulations! You Won!\n With '+ moveCounter+'Moves\n Wooooo!');
+        modalTextElement.innerHTML = "<h1>Congratulations! You Won!</h1> With "+ moveCounter+" Moves and "+ stars +" Stars.<br> Wooooo!";
+        modal.style.display = "block";
     }
 }
 
@@ -107,6 +118,10 @@ for(const card of cards){
 
 retstartButton.addEventListener('click', function(){
     location.reload();
-})
+});
+
+resetButton.addEventListener('click', function(){
+    location.reload();
+});
 
 
