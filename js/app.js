@@ -55,6 +55,10 @@ function hideCardSymbol(existingCard, newCardClass){
     newCardClass.classList.remove('match');
 }
 
+function updateMoveCounter(){
+    moveCounter++;
+    moveCounterTag.textContent = moveCounter;
+}
 function addCardToOpenCards(card){
     if(openCards.length === 1){
         const existingCard = openCards.pop();
@@ -66,8 +70,7 @@ function addCardToOpenCards(card){
         else{
             hideCardSymbol(existingCard, card);
         }
-        moveCounter++;
-        moveCounterTag.textContent = moveCounter;
+        updateMoveCounter();
     }
     else{
         openCards.push(card);
