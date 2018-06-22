@@ -2,9 +2,11 @@
  * Create a list that holds all of your cards
  */
 let cards = document.getElementsByClassName('card');
+let moveCounterTag = document.getElementsByClassName('moves')[0];
 let deck = document.getElementsByClassName('deck')[0];
 let openCards = [];
 let matchedCards = [];
+let moveCounter = 0;
 
 /*
  * Display the cards on the page
@@ -47,17 +49,25 @@ function lockTheCards(existingCard, newCardClass){
     existingCard.removeEventListener('click', cardClick);
     newCardClass.removeEventListener('click', cardClick);
 }
+
+function hideCardSymbol(existingCard, newCardClass){
+    existingCard.classList.remove('match');
+    newCardClass.classList.remove('match');
+}
+
 function addCardToOpenCards(card){
     if(openCards.length === 1){
         const existingCard = openCards.pop();
         existingCardClass = existingCard.getElementsByTagName('i')[0].classList[1];
         newCardClass = card.getElementsByTagName('i')[0].classList[1];
         if(existingCardClass === newCardClass){
-            lockTheCards(existingCard, newCardClass);
+            lockTheCards(existingCard, card);
         }
         else{
-            alert('card not matching');
+            hideCardSymbol(existingCard, card);
         }
+        moveCounter++;
+        moveCounterTag.textContent = moveCounter;
     }
     else{
         openCards.push(card);
