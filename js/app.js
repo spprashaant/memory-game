@@ -5,9 +5,12 @@ let cards = document.getElementsByClassName('card');
 let moveCounterTag = document.getElementsByClassName('moves')[0];
 let deck = document.getElementsByClassName('deck')[0];
 let retstartButton = document.getElementsByClassName('restart')[0];
+let starsElement = document.getElementsByClassName('stars')[0];
 let openCards = [];
 let matchedCards = [];
 let moveCounter = 0;
+let stars = 5;
+const increment = 5;
 
 /*
  * Display the cards on the page
@@ -58,6 +61,12 @@ function hideCardSymbol(existingCard, newCardClass){
 
 function updateMoveCounter(){
     moveCounter++;
+        if(moveCounter % increment === 0){
+            if(stars > 1){
+                stars--;
+                starsElement.removeChild(starsElement.children[0]);
+            }
+        }
     moveCounterTag.textContent = moveCounter;
 }
 
