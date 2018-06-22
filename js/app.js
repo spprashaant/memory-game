@@ -43,7 +43,20 @@ function displayCardSymbol(card){
     card.classList.add('match');
 }
 function addCardToOpenCards(card){
-    openCards.push(card);
+    if(openCards.length === 1){
+        const existingCard = openCards.pop();
+        existingCardClass = existingCard.getElementsByTagName('i')[0].classList[1];
+        newCardClass = card.getElementsByTagName('i')[0].classList[1];
+        if(existingCardClass === newCardClass){
+            alert('card match');
+        }
+        else{
+            alert('card not matching');
+        }
+    }
+    else{
+        openCards.push(card);
+    }
 }
 function cardClick(){
     displayCardSymbol(this);
