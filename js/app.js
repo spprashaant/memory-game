@@ -42,13 +42,18 @@ function shuffle(array) {
 function displayCardSymbol(card){
     card.classList.add('match');
 }
+
+function lockTheCards(existingCard, newCardClass){
+    existingCard.removeEventListener('click', cardClick);
+    newCardClass.removeEventListener('click', cardClick);
+}
 function addCardToOpenCards(card){
     if(openCards.length === 1){
         const existingCard = openCards.pop();
         existingCardClass = existingCard.getElementsByTagName('i')[0].classList[1];
         newCardClass = card.getElementsByTagName('i')[0].classList[1];
         if(existingCardClass === newCardClass){
-            alert('card match');
+            lockTheCards(existingCard, newCardClass);
         }
         else{
             alert('card not matching');
