@@ -4,6 +4,7 @@
 let cards = document.getElementsByClassName('card');
 let moveCounterTag = document.getElementsByClassName('moves')[0];
 let deck = document.getElementsByClassName('deck')[0];
+let retstartButton = document.getElementsByClassName('restart')[0];
 let openCards = [];
 let matchedCards = [];
 let moveCounter = 0;
@@ -59,6 +60,13 @@ function updateMoveCounter(){
     moveCounter++;
     moveCounterTag.textContent = moveCounter;
 }
+
+function checkDone(){
+    if(matchedCards.length === cards.length){
+        alert('Congratulations! You Won!\n With '+ moveCounter+'Moves\n Wooooo!');
+    }
+}
+
 function addCardToOpenCards(card){
     if(openCards.length === 1){
         const existingCard = openCards.pop();
@@ -66,6 +74,10 @@ function addCardToOpenCards(card){
         newCardClass = card.getElementsByTagName('i')[0].classList[1];
         if(existingCardClass === newCardClass){
             lockTheCards(existingCard, card);
+            matchedCards.push(existingCard);
+            matchedCards.push(card);
+            checkDone();
+            
         }
         else{
             hideCardSymbol(existingCard, card);
@@ -83,5 +95,9 @@ function cardClick(){
 for(const card of cards){
     card.addEventListener('click', cardClick);
 }
+
+retstartButton.addEventListener('click', function(){
+    location.reload();
+})
 
 
