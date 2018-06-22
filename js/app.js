@@ -42,9 +42,12 @@ function shuffle(array) {
 function displayCardSymbol(card){
     card.classList.add('match');
 }
-
+function addCardToOpenCards(card){
+    openCards.push(card);
+}
 function cardClick(){
     displayCardSymbol(this);
+    addCardToOpenCards(this);
 }
 for(const card of cards){
     card.addEventListener('click', cardClick);
