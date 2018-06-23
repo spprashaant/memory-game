@@ -1,16 +1,19 @@
 /*
  * Create a list that holds all of your cards
  */
-let cards = document.getElementsByClassName('card');
+//let cards = document.getElementsByClassName('card');
 let moveCounterTag = document.getElementsByClassName('moves')[0];
 let deck = document.getElementsByClassName('deck')[0];
-let retstartButton = document.getElementsByClassName('restart')[0];
+const cards = Array.from(deck.children);
+let restartButton = document.getElementsByClassName('restart')[0];
 let starsElement = document.getElementsByClassName('stars')[0];
 let modal = document.getElementById('myModal'); 
 let modalTextElement = modal.getElementsByTagName('p')[0];  
 let resetButton = document.getElementsByClassName('reset-button')[0];
 let openCards = [];
 let matchedCards = [];
+let removedStars = [];
+let shuffledCards = [];
 let moveCounter = 0;
 let stars = 5;
 const increment = 5;
@@ -24,7 +27,9 @@ const increment = 5;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    deck.innerHTML = '';
+
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -34,7 +39,11 @@ function shuffle(array) {
         array[randomIndex] = temporaryValue;
     }
 
-    return array;
+    for(let card of array){
+        card.addEventListener('click', cardClick);
+        card.classList.remove('match');
+        deck.appendChild(card);
+    }
 }
 
 
@@ -96,14 +105,15 @@ function updateMoveCounter(){
         if(moveCounter % increment === 0){
             if(stars > 1){
                 stars--;
-                starsElement.removeChild(starsElement.children[0]);
+                const star = starsElement.removeChild(starsElement.children[0]);
+                removedStars.push(star);
             }
         }
     moveCounterTag.textContent = moveCounter;
 }
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
@@ -111,10 +121,10 @@ span.onclick = function() {
 
 
 function checkDone(){
-    //if(matchedCards.length === cards.length){
+    if(matchedCards.length === cards.length){
         modalTextElement.innerHTML = "<h1>Congratulations! You Won!</h1> With "+ moveCounter+" Moves and "+ stars +" Stars.<br>You took "+getTime(clock.getFaceValue())+" seconds to complete the game.<br> Wooooo!";
         modal.style.display = "block";
-    //}
+    }
 }
 
 function addCardToOpenCards(card){
@@ -147,16 +157,28 @@ function cardClick(){
     displayCardSymbol(this);
     addCardToOpenCards(this);
 }
-for(const card of cards){
-    card.addEventListener('click', cardClick);
+
+
+function restart(){
+    clock.reset();
+    clock.start();
+    moveCounter = 0;
+    stars = 5;
+    for(let star of removedStars){
+        starsElement.appendChild(star);
+    }
+    removedStars = [];
+    moveCounterTag.textContent = moveCounter;
+    shuffle(cards);
 }
 
-retstartButton.addEventListener('click', function(){
-    location.reload();
-});
+shuffle(cards);
+
+restartButton.addEventListener('click', restart);
 
 resetButton.addEventListener('click', function(){
-    location.reload();
+    restart();
+    modal.style.display = "none";
 });
 
 
