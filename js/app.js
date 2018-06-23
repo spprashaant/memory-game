@@ -122,6 +122,7 @@ function addCardToOpenCards(card){
         const existingCard = openCards.pop();
         existingCardClass = existingCard.getElementsByTagName('i')[0].classList[1];
         newCardClass = card.getElementsByTagName('i')[0].classList[1];
+        updateMoveCounter();
         if(existingCardClass === newCardClass){
             lockTheCards(existingCard, card);
             matchedCards.push(existingCard);
@@ -131,11 +132,12 @@ function addCardToOpenCards(card){
         }
         else{
             hideCardSymbol(existingCard, card);
+            existingCard.addEventListener('click', cardClick);
         }
-        updateMoveCounter();
     }
     else{
         openCards.push(card);
+        card.removeEventListener('click', cardClick);
     }
 }
 function cardClick(){
