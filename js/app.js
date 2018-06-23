@@ -48,6 +48,13 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+var clock = jQuery('.flip-clock').FlipClock({
+    // ... your options here
+    });
+
+
+
 function displayCardSymbol(card){
     card.classList.add('match');
 }
@@ -79,6 +86,7 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
     modal.style.display = "none";
 }
+
 
 function checkDone(){
     if(matchedCards.length === cards.length){
