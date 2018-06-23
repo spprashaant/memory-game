@@ -131,7 +131,10 @@ function addCardToOpenCards(card){
             
         }
         else{
-            hideCardSymbol(existingCard, card);
+            setTimeout(function(){
+                hideCardSymbol(existingCard, card);
+            }, 500);
+            
             existingCard.addEventListener('click', cardClick);
         }
     }
