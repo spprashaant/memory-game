@@ -49,11 +49,33 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-var clock = jQuery('.flip-clock').FlipClock({
+const clock = jQuery('.flip-clock').FlipClock({
     // ... your options here
     });
 
+function getTime(seconds){
+    let timeString = '';
+    const date = new Date(seconds * 1000);
+    const hh = date.getUTCHours();
+    const mm = date.getUTCMinutes();
+    const ss = date.getSeconds();
 
+    // This formats your string to HH:MM:SS
+    if(hh>0){
+        timeString += hh + " hours, "
+    }
+    if(mm >0){
+        if(mm ===1){
+            timeString += mm + " min, "
+        }else{
+            timeString += mm + " mins, "
+        }
+    }
+    if(ss > 0){
+        timeString += ss + " secs"
+    }
+    return timeString;
+}
 
 function displayCardSymbol(card){
     card.classList.add('match');
@@ -89,10 +111,10 @@ span.onclick = function() {
 
 
 function checkDone(){
-    if(matchedCards.length === cards.length){
-        modalTextElement.innerHTML = "<h1>Congratulations! You Won!</h1> With "+ moveCounter+" Moves and "+ stars +" Stars.<br> Wooooo!";
+    //if(matchedCards.length === cards.length){
+        modalTextElement.innerHTML = "<h1>Congratulations! You Won!</h1> With "+ moveCounter+" Moves and "+ stars +" Stars.<br>You took "+getTime(clock.getFaceValue())+" seconds to complete the game.<br> Wooooo!";
         modal.style.display = "block";
-    }
+    //}
 }
 
 function addCardToOpenCards(card){
